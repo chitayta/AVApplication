@@ -60,9 +60,10 @@ public class MainTabDataViewActivity extends AppCompatActivity {
         String access_token = callerIntent.getStringExtra("access_token");
         String token_type = callerIntent.getStringExtra("token_type");
         String refresh_token = callerIntent.getStringExtra("refresh_token");
-        Integer expires_in = callerIntent.getIntExtra("expires_in",0);
+        Integer expires_in = callerIntent.getIntExtra("expires_in", 0);
         accessToken = new AccessToken(access_token, token_type, refresh_token, expires_in);
-
+        System.out.println("SYSTEM UID: " + systemUid);
+        System.out.println("ACCESS_TOKEN: " + access_token);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), accessToken, systemUid);
 
 

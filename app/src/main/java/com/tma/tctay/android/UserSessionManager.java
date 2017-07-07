@@ -56,6 +56,16 @@ public class UserSessionManager {
         editor.commit();
     }
 
+    public void refreshAccessToken(String accessToken, String refreshToken, String tokenType, Integer expiresIn)
+    {
+        editor.putString(KEY_ACCESS_TOKEN, accessToken);
+        editor.putString(KEY_REFRESH_TOKEN, refreshToken);
+        editor.putString(KEY_TOKEN_TYPE, tokenType);
+        editor.putInt(KEY_EXPIRES_IN, expiresIn);
+
+        editor.commit();
+    }
+
     public boolean checkLogin()
     {
         if (!this.isUserLoggedIn())

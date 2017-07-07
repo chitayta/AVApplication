@@ -246,22 +246,28 @@ public class DataPlaceholderFragment extends Fragment {
 
         @Override
         protected void onPostExecute(final ReceivedLastDataPoint receivedLastDataPoint) {
+            if (receivedLastDataPoint == null)
+            {
+                Toast.makeText(appContext, "Something wrong...", Toast.LENGTH_LONG).show();
+                return;
+            }
+            else {
+                Button timestampTemperatureDataViewButton = (Button) appActivity.findViewById(R.id.timestampTemperatureDataViewButton);
+                timestampTemperatureDataViewButton.setText(receivedLastDataPoint.getTemperatureData().getTemperatureTimeStampString());
 
-            Button timestampTemperatureDataViewButton = (Button) appActivity.findViewById(R.id.timestampTemperatureDataViewButton);
-            timestampTemperatureDataViewButton.setText(receivedLastDataPoint.getTemperatureData().getTemperatureTimeStampString());
+                Button temperatureDataViewButton = (Button) appActivity.findViewById(R.id.temperatureDataViewButton);
+                temperatureDataViewButton.setText(receivedLastDataPoint.getTemperatureData().getTemperatureData().toString());//+ "      " + (char) 0x00B0 + "C");
 
-            Button temperatureDataViewButton = (Button) appActivity.findViewById(R.id.temperatureDataViewButton);
-            temperatureDataViewButton.setText(receivedLastDataPoint.getTemperatureData().getTemperatureData().toString());//+ "      " + (char) 0x00B0 + "C");
+                Button timestampMotionDataViewButton = (Button) appActivity.findViewById(R.id.timestampMotionDataViewButton);
+                timestampMotionDataViewButton.setText(receivedLastDataPoint.getMotionData().getMotionTimeStampString());
 
-            Button timestampMotionDataViewButton = (Button) appActivity.findViewById(R.id.timestampMotionDataViewButton);
-            timestampMotionDataViewButton.setText(receivedLastDataPoint.getMotionData().getMotionTimeStampString());
+                Button motionDataViewButton = (Button) appActivity.findViewById(R.id.motionDataViewButton);
+                motionDataViewButton.setText(receivedLastDataPoint.getMotionData().getMotionData());
 
-            Button motionDataViewButton = (Button) appActivity.findViewById(R.id.motionDataViewButton);
-            motionDataViewButton.setText(receivedLastDataPoint.getMotionData().getMotionData());
+                swipeRefreshLayoutData.setRefreshing(false);
 
-            swipeRefreshLayoutData.setRefreshing(false);
-
-            Toast.makeText(appContext, "Successfully refreshed data!",Toast.LENGTH_LONG).show();
+                Toast.makeText(appContext, "Successfully refreshed data!", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

@@ -90,6 +90,7 @@ public class GetDataFromCloudTask extends AsyncTask<Void, Boolean, ReceivedLastD
                 }
             } catch (JSONException e) {
                 //textView.setText("Error when parse json:\n" + e.getMessage());
+                System.out.println("Request URL: " + dataUrl);
                 System.out.println("JSONException: " + e.getMessage());
                 e.printStackTrace();
             } catch (ExecutionException e) {

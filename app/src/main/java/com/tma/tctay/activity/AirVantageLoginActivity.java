@@ -363,40 +363,33 @@ public class AirVantageLoginActivity extends AppCompatActivity implements Loader
         protected JSONObject doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
+            String url = "https://eu.airvantage.net/api/oauth/token?grant_type=password&username=" + mEmail + "&password=" + mPassword + "&client_id="+mClientId+"&client_secret="+mClientSecret;
+
+            RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            RequestFuture<JSONObject> future = RequestFuture.newFuture();
+
+            JsonObjectRequest request = new JsonObjectRequest(url, new JSONObject(), future, future);
+
+
+            mRequestQueue.add(request);
+
             try {
-                //Simulate network access.
-                Thread.sleep(2000);
-                String url = "https://eu.airvantage.net/api/oauth/token?grant_type=password&username=" + mEmail + "&password=" + mPassword + "&client_id="+mClientId+"&client_secret="+mClientSecret;
+                System.out.println("Getting response from request...");
+                JSONObject response = future.get(); // this will block
 
-                RequestQueue mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-
-                RequestFuture<JSONObject> future = RequestFuture.newFuture();
-
-                JsonObjectRequest request = new JsonObjectRequest(url, new JSONObject(), future, future);
-
-
-                mRequestQueue.add(request);
-
-                try {
-                    System.out.println("Getting response from request...");
-                    JSONObject response = future.get(); // this will block
-
-                    System.out.println("Response from request: " + response);
-                    return_response = response;
-                } catch (InterruptedException e) {
-                    // exception handling
-                    System.out.println("InterruptedException: " + e.getMessage());
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    // exception handling
-                    System.out.println("ExecutionException: " + e.getMessage());
-                    e.printStackTrace();
-                }
-                System.out.println("Successful to get response from request.");
+                System.out.println("Response from request: " + response);
+                return_response = response;
             } catch (InterruptedException e) {
-                System.out.println("InteruptException: " + e.getMessage());
+                // exception handling
+                System.out.println("InterruptedException: " + e.getMessage());
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                // exception handling
+                System.out.println("ExecutionException: " + e.getMessage());
                 e.printStackTrace();
             }
+            System.out.println("Successful to get response from request.");
 
             return return_response;
         }

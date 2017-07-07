@@ -150,6 +150,8 @@ public class SystemPlaceholderFragment extends Fragment {
 
                 modelArrayList.add(new ListViewSystemItemModel("Device Detail"));
 
+                mRequestQueue.add(deviceDataRequest);
+
             } catch (JSONException e) {
 
                 System.out.println("JSONException: " + e.getMessage());
@@ -174,7 +176,6 @@ public class SystemPlaceholderFragment extends Fragment {
 
             mListAdapter = new SystemListViewAdapter(getContext(), modelArrayList, accessToken);
             mListView.setAdapter(mListAdapter);
-
             //progressDialog.dismiss();
         }
     }
