@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\AndroidStudio\\TCT\\app\\build\\intermediates\\res\\merged\\debug\\transition\\slide_from_left.xml",
+        "source": "E:\\AndroidStudio\\TCT\\app\\src\\main\\res\\transition\\slide_from_left.xml"
+    },
+    {
+        "merged": "E:\\AndroidStudio\\TCT\\app\\build\\intermediates\\res\\merged\\debug\\transition\\slide_to_left.xml",
+        "source": "E:\\AndroidStudio\\TCT\\app\\src\\main\\res\\transition\\slide_to_left.xml"
+    },
+    {
+        "merged": "E:\\AndroidStudio\\TCT\\app\\build\\intermediates\\res\\merged\\debug\\transition\\slide_to_right.xml",
+        "source": "E:\\AndroidStudio\\TCT\\app\\src\\main\\res\\transition\\slide_to_right.xml"
+    },
+    {
+        "merged": "E:\\AndroidStudio\\TCT\\app\\build\\intermediates\\res\\merged\\debug\\transition\\slide_from_right.xml",
+        "source": "E:\\AndroidStudio\\TCT\\app\\src\\main\\res\\transition\\slide_from_right.xml"
+    }
+]

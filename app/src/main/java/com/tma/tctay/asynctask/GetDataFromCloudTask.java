@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,7 +37,7 @@ public class GetDataFromCloudTask extends AsyncTask<Void, Boolean, ReceivedLastD
     private Context appContext;
     private Activity appActivity;
     private ProgressDialog progressDialog;
-    //private ProgressBar dataWaitingProgressBar;
+    private ProgressBar dataWaitingProgressBar;
     public GetDataFromCloudTask(String systemUid, AccessToken accessTokenResponse, Context appContext, Activity appActivity) {
 
         this.systemUid = systemUid;
@@ -49,7 +50,7 @@ public class GetDataFromCloudTask extends AsyncTask<Void, Boolean, ReceivedLastD
     @Override
     protected void onPreExecute()
     {
-        progressDialog = ProgressDialog.show(appContext, "Loading", "Data is loading...",true);
+        //progressDialog = ProgressDialog.show(appContext, "Loading", "Data is loading...",true);
     }
 
     @Override
@@ -117,7 +118,8 @@ public class GetDataFromCloudTask extends AsyncTask<Void, Boolean, ReceivedLastD
 
         Button motionDataViewButton = (Button) appActivity.findViewById(R.id.motionDataViewButton);
         motionDataViewButton.setText(receivedLastDataPoint.getMotionData().getMotionData());
-        progressDialog.dismiss();
+        //progressDialog.dismiss();
 
     }
+
 }

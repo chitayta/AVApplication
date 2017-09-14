@@ -1,6 +1,7 @@
 package com.tma.tctay.tabfragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -98,7 +99,8 @@ public class DataPlaceholderFragment extends Fragment {
 //                rootView = inflater.inflate(R.layout.fragment_dashboard_main_tab_data_view, container, false);
 //                break;
 //            case 2:
-                new GetDataFromCloudTask(systemUid, accessToken, getContext(), getActivity()).execute();
+
+                (new GetDataFromCloudTask(systemUid, accessToken, getContext(), getActivity())).execute();
 
                 rootView = inflater.inflate(R.layout.fragment_data_main_tab_data_view, container, false);
                 swipeRefreshLayoutData = rootView.findViewById(R.id.swiperefreshdata);
@@ -266,7 +268,7 @@ public class DataPlaceholderFragment extends Fragment {
 
                 swipeRefreshLayoutData.setRefreshing(false);
 
-                Toast.makeText(appContext, "Successfully refreshed data!", Toast.LENGTH_LONG).show();
+                Toast.makeText(appContext, "Successful to refresh data!", Toast.LENGTH_LONG).show();
             }
         }
     }

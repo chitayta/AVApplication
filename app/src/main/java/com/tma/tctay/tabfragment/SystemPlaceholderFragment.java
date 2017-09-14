@@ -25,6 +25,7 @@ import com.tma.tctay.models.AccessToken;
 import com.tma.tctay.models.ListViewSystemItemModel;
 import com.tma.tctay.models.ReceivedLastDataPoint;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -126,31 +127,38 @@ public class SystemPlaceholderFragment extends Fragment {
             Integer expires_in = accessTokenResponse.getExpires_in();
             AccessToken accessToken = new AccessToken(access_token, token_type, refesh_token, expires_in);
             RequestQueue mRequestQueue = Volley.newRequestQueue(appContext.getApplicationContext());
-            RequestFuture<JSONObject> future = RequestFuture.newFuture();
-
 
             String userDataUrl = "https://eu.airvantage.net/api/v1/users/current?access_token=" + accessToken.getAccess_token();
-            String deviceDataUrl = "https://eu.airvantage.net/api/v1/users/current?access_token=" + accessToken.getAccess_token();
+            //String deviceDataUrl = "https://eu.airvantage.net/api/v1/users/current?access_token=" + accessToken.getAccess_token();
+            String deviceDataUrl = "https://eu.airvantage.net/api/v1/systems?fields=uid,name,gateway,subscriptions&uid=" + systemUid + "&access_token=" + accessToken.getAccess_token();
 
-            JsonObjectRequest userDataRequest = new JsonObjectRequest(Request.Method.GET , userDataUrl, new JSONObject(), future, future);
-            JsonObjectRequest deviceDataRequest = new JsonObjectRequest(Request.Method.GET , deviceDataUrl, new JSONObject(), future, future);
-
-            mRequestQueue.add(userDataRequest);
+            JSONObject response;
 
             try {
-                modelArrayList.add(new ListViewSystemItemModel("User Detail"));
-
-                JSONObject response = future.get(); // this will block
+                RequestFuture<JSONObject> userDataFuture = RequestFuture.newFuture();
+                JsonObjectRequest userDataRequest = new JsonObjectRequest(Request.Method.GET , userDataUrl, new JSONObject(), userDataFuture, userDataFuture);
+                mRequestQueue.add(userDataRequest);
+                response = userDataFuture.get(); // this will block
                 System.out.println("USER DATA RESPONSE: " + response.toString());
                 String email = response.getString("email");
                 String name = response.getString("name");
-
+                modelArrayList.add(new ListViewSystemItemModel("User Detail"));
                 modelArrayList.add(new ListViewSystemItemModel("Email", email));
                 modelArrayList.add(new ListViewSystemItemModel("Name", name));
 
-                modelArrayList.add(new ListViewSystemItemModel("Device Detail"));
-
+                RequestFuture<JSONObject> deviceDataFuture = RequestFuture.newFuture();
+                JsonObjectRequest deviceDataRequest = new JsonObjectRequest(Request.Method.GET , deviceDataUrl, new JSONObject(), deviceDataFuture, deviceDataFuture);
                 mRequestQueue.add(deviceDataRequest);
+                response = deviceDataFuture.get(); // this will block
+                System.out.println("DEVICE DATA RESPONSE: " + response.toString());
+                JSONArray listItem = response.getJSONArray("items");
+                JSONObject device = (JSONObject) listItem.get(0);
+                String systemName = device.getString("name");
+                JSONObject deviceGateway = device.getJSONObject("gateway");
+                String serialNumber = deviceGateway.getString("serialNumber");
+                modelArrayList.add(new ListViewSystemItemModel("Device Detail"));
+                modelArrayList.add(new ListViewSystemItemModel("System Name", systemName));
+                modelArrayList.add(new ListViewSystemItemModel("Serial Number", serialNumber));
 
             } catch (JSONException e) {
 
@@ -167,7 +175,11 @@ public class SystemPlaceholderFragment extends Fragment {
                 System.out.println("InterruptedException: " + e.getMessage());
                 e.printStackTrace();
 
+            } catch (Exception e) {
+                System.out.println("Exception: " + e.getMessage());
+                e.printStackTrace();
             }
+
             return true;
         }
 

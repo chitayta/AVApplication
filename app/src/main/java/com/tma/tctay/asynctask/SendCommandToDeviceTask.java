@@ -115,6 +115,6 @@ public class SendCommandToDeviceTask extends AsyncTask<Void, Boolean, String>{
     protected void onPostExecute(final String operationId) {
         progressDialog.dismiss();
         System.out.println("DONE: " + operationId);
-        Toast.makeText(appContext, "Successfully sent command to turn left " + (isTurnOnLed?"on!":"off!"),Toast.LENGTH_LONG).show();
+        Toast.makeText(appContext, "Successfully sent command to turn led " + (isTurnOnLed?"on!":"off!"),Toast.LENGTH_LONG).show();
     }
 }

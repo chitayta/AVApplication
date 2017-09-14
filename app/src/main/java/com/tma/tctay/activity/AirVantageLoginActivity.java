@@ -270,7 +270,7 @@ public class AirVantageLoginActivity extends AppCompatActivity implements Loader
                     mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
             });
-
+            //mLoginFormView.setVisibility(View.);
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {

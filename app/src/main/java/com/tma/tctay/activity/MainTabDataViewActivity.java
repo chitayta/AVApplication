@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.tma.tctay.android.UserSessionManager;
+import com.tma.tctay.asynctask.SubscribeMessageTopic;
 import com.tma.tctay.models.AccessToken;
 import com.tma.tctay.tabfragment.CommandPlaceholderFragment;
 import com.tma.tctay.tabfragment.DashboardPlaceholderFragment;
@@ -93,7 +94,6 @@ public class MainTabDataViewActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -103,7 +103,6 @@ public class MainTabDataViewActivity extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
         //tabLayout.addTab(R.id.tabItem);
@@ -128,7 +127,7 @@ public class MainTabDataViewActivity extends AppCompatActivity {
         //dataWaitingProgressBar = (ProgressBar) findViewById(R.id.dataWaitingProgressBar);
         //tabLayoutView = (View) findViewById(R.id.main_content);
 
-
+        (new SubscribeMessageTopic(getApplicationContext(), "25290A6A4045", systemUid, accessToken, this)).execute();
     }
 
     @Override
@@ -222,5 +221,10 @@ public class MainTabDataViewActivity extends AppCompatActivity {
 //            };
 //            return null;
 //        }
+    }
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
     }
 }
